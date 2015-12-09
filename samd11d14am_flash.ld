@@ -1,9 +1,9 @@
 /**
  * \file
  *
- * \brief Linker script for running in internal FLASH on the SAMD21J18A
+ * \brief Linker script for running in internal FLASH on the SAMD11D14AM
  *
- * Copyright (c) 2013-2014 Atmel Corporation. All rights reserved.
+ * Copyright (c) 2014 Atmel Corporation. All rights reserved.
  *
  * \asf_license_start
  *
@@ -49,12 +49,12 @@ SEARCH_DIR(.)
 /* Memory Spaces Definitions */
 MEMORY
 {
-  rom (rx)  : ORIGIN = 0x00000000, LENGTH = 0x00040000
-  ram (rwx) : ORIGIN = 0x20000000, LENGTH = 0x00008000-0x0004 /* 4 bytes used by bootloader to keep data between resets */
+  rom    (rx)  : ORIGIN = 0x00000000, LENGTH = 0x00004000
+  ram    (rwx) : ORIGIN = 0x20000000, LENGTH = 0x00001000
 }
 
 /* The stack size used by the application. NOTE: you need to adjust according to your application. */
-STACK_SIZE = DEFINED(STACK_SIZE) ? STACK_SIZE : DEFINED(__stack_size__) ? __stack_size__ : 0x2000;
+STACK_SIZE = DEFINED(STACK_SIZE) ? STACK_SIZE : DEFINED(__stack_size__) ? __stack_size__ : 0x400;
 
 /* Section Definitions */
 SECTIONS
