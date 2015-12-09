@@ -12,14 +12,6 @@ INCLUDES=-I CMSIS/CMSIS/Include/ -I CMSIS/Device/ATMEL/ -I./drivers/ -I./utils/ 
 SOURCES=main.c startup_samd21.c drivers/uart_driver.c utils/interrupt/interrupt_sam_nvic.c 
 OBJECTS=$(addprefix $(BUILD_PATH)/, $(SOURCES:.c=.o))
 
-# Sets the serial interface according to the following table
-#
-#  Both interfaces  0
-#  Uart Boot        1
-#  USB CDC Boot	    2
-SAMBA_IF=2
-CFLAGS+=-DSAM_BA_INTERFACE=$(SAMBA_IF)
-
 NAME=samd11_capture_test
 EXECUTABLE=$(NAME).bin
 
