@@ -1,9 +1,9 @@
 /**
  * \file
  *
- * \brief gcc starttup file for SAMD21
+ * \brief gcc starttup file for SAMD11
  *
- * Copyright (c) 2013-2014 Atmel Corporation. All rights reserved.
+ * Copyright (c) 2014 Atmel Corporation. All rights reserved.
  *
  * \asf_license_start
  *
@@ -78,27 +78,24 @@ void RTC_Handler             ( void ) __attribute__ ((weak, alias("Dummy_Handler
 void EIC_Handler             ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
 void NVMCTRL_Handler         ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
 void DMAC_Handler            ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+#ifdef USB_IRQn
 void USB_Handler             ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+#endif
 void EVSYS_Handler           ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
 void SERCOM0_Handler         ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
 void SERCOM1_Handler         ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+#ifdef SERCOM2_IRQn
 void SERCOM2_Handler         ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
-void SERCOM3_Handler         ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
-void SERCOM4_Handler         ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
-void SERCOM5_Handler         ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+#endif
 void TCC0_Handler            ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
-void TCC1_Handler            ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
-void TCC2_Handler            ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
-void TC3_Handler             ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
-void TC4_Handler             ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
-void TC5_Handler             ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
-void TC6_Handler             ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
-void TC7_Handler             ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+void TC1_Handler             ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+void TC2_Handler             ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
 void ADC_Handler             ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
 void AC_Handler              ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+#ifdef DAC_IRQn
 void DAC_Handler             ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+#endif
 void PTC_Handler             ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
-void I2S_Handler             ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
 
 /* Exception Table */
 __attribute__ ((section(".vectors")))
@@ -131,27 +128,30 @@ const DeviceVectors exception_table = {
         (void*) EIC_Handler,            /*  4 External Interrupt Controller */
         (void*) NVMCTRL_Handler,        /*  5 Non-Volatile Memory Controller */
         (void*) DMAC_Handler,           /*  6 Direct Memory Access Controller */
+#ifdef USB_IRQn
         (void*) USB_Handler,            /*  7 Universal Serial Bus */
+#else
+        (void*) (0UL), /* Reserved */
+#endif
         (void*) EVSYS_Handler,          /*  8 Event System Interface */
         (void*) SERCOM0_Handler,        /*  9 Serial Communication Interface 0 */
         (void*) SERCOM1_Handler,        /* 10 Serial Communication Interface 1 */
+#ifdef SERCOM2_IRQn
         (void*) SERCOM2_Handler,        /* 11 Serial Communication Interface 2 */
-        (void*) SERCOM3_Handler,        /* 12 Serial Communication Interface 3 */
-        (void*) SERCOM4_Handler,        /* 13 Serial Communication Interface 4 */
-        (void*) SERCOM5_Handler,        /* 14 Serial Communication Interface 5 */
-        (void*) TCC0_Handler,           /* 15 Timer Counter Control 0 */
-        (void*) TCC1_Handler,           /* 16 Timer Counter Control 1 */
-        (void*) TCC2_Handler,           /* 17 Timer Counter Control 2 */
-        (void*) TC3_Handler,            /* 18 Basic Timer Counter 0 */
-        (void*) TC4_Handler,            /* 19 Basic Timer Counter 1 */
-        (void*) TC5_Handler,            /* 20 Basic Timer Counter 2 */
-        (void*) TC6_Handler,            /* 21 Basic Timer Counter 3 */
-        (void*) TC7_Handler,            /* 22 Basic Timer Counter 4 */
-        (void*) ADC_Handler,            /* 23 Analog Digital Converter */
-        (void*) AC_Handler,             /* 24 Analog Comparators */
-        (void*) DAC_Handler,            /* 25 Digital Analog Converter */
-        (void*) PTC_Handler,            /* 26 Peripheral Touch Controller */
-        (void*) I2S_Handler             /* 27 Inter-IC Sound Interface */
+#else
+        (void*) (0UL), /* Reserved */
+#endif
+        (void*) TCC0_Handler,           /* 12 Timer Counter Control */
+        (void*) TC1_Handler,            /* 13 Basic Timer Counter 0 */
+        (void*) TC2_Handler,            /* 14 Basic Timer Counter 1 */
+        (void*) ADC_Handler,            /* 15 Analog Digital Converter */
+        (void*) AC_Handler,             /* 16 Analog Comparators */
+#ifdef DAC_IRQn
+        (void*) DAC_Handler,            /* 17 Digital Analog Converter */
+#else
+        (void*) (0UL), /* Reserved */
+#endif
+        (void*) PTC_Handler             /* 18 Peripheral Touch Controller */
 };
 
 /**
